@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valentine</title>
+
+<style>
+body{
+ font-family:Arial;
+ text-align:center;
+ background:linear-gradient(45deg,#ff9ecb,#ff4d6d);
+ color:white;
+ padding-top:40px;
+ overflow:hidden;
+ margin:0;
+}
+
+button{
+ padding:15px 25px;
+ font-size:18px;
+ margin:10px;
+ border:none;
+ border-radius:10px;
+ cursor:pointer;
+}
+
+#play{background:#fff;color:#ff4d6d;}
+#yes{background:#fff;color:#ff4d6d;}
+#no{background:#ddd;color:#333;position:absolute;}
+
+.hearts{
+ position:fixed;
+ font-size:24px;
+ animation:float 3s linear infinite;
+ pointer-events:none;
+}
+
+@keyframes float{
+ from{transform:translateY(100vh);}
+ to{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="content">
+  <h2>Hey… you make my world brighter every day ❤️ — REN</h2>
+  <h3>Will you be my Valentine?</h3>
+
+  <button id="play" onclick="playMusic()">Play Me 🎵</button><br>
+
+  <button id="yes" onclick="yes()">Yes</button>
+  <button id="no">No</button>
+</div>
+
+<!-- Audio stays outside the content so it doesn't get deleted -->
+<audio id="music" src="Edd_Sheeran_-_Perfect_(mp3.pm).mp3" loop></audio>
+
+<script>
+const noBtn = document.getElementById("no");
+let scale = 1;
+
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+noBtn.addEventListener("click", () => {
+  scale -= 0.15;
+  if (scale < 0.3) scale = 0.3;
+  noBtn.style.transform = "scale(" + scale + ")";
+});
+
+function playMusic(){
+  const music = document.getElementById("music");
+  music.volume = 0.8;
+  music.play().then(() => {
+    // Optional: hide play button after it starts
+    document.getElementById("play").style.display = "none";
+  }).catch((e) => {
+    console.log("Playback blocked:", e);
+  });
+}
+
+function yes(){
+  const content = document.getElementById("content");
+  content.innerHTML = "<h1>REN is the happiest ❤️🎉</h1>";
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "hearts";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.textContent = "❤️";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+  }, 200);
+}
+</script>
+
+</body>
+</html>
